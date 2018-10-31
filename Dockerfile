@@ -37,7 +37,7 @@ RUN set -x; \
         && rm -rf /var/lib/apt/lists/* odoo.deb
 
 # Copy entrypoint script and Odoo configuration file
-RUN pip3 install --no-cache-dir num2words xlwt pandas
+RUN pip3 install --no-cache-dir num2words xlwt pandas phonenumbers xlrd
 COPY ./entrypoint.sh /
 COPY ./odoo.conf /etc/odoo/
 RUN chmod +x entrypoint.sh \
