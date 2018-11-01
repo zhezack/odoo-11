@@ -1,8 +1,10 @@
 FROM debian:stretch
 
-ENV LANG C.UTF-8
-ENV ODOO_VERSION 11.0
-ENV ODOO_RELEASE 20181008
+ENV LANG=C.UTF-8 \
+    ODOO_VERSION=11.0 \
+    ODOO_RELEASE=20181008 \
+    PG_VERSION=10 \
+    DEBIAN_FRONTEND=noninteractive
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
@@ -28,8 +30,6 @@ RUN set -x; \
         && rm wkhtmltox.tar.xz
 
 # Install PG client
-ENV PG_VERSION 10 \
-    DEBIAN_FRONTEND noninteractive \
 RUN cd /tmp && \
     curl https://www.postgresql.org/media/keys/ACCC4CF8.asc -o ACCC4CF8.asc && \
     apt-key add ACCC4CF8.asc && \
