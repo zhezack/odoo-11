@@ -3,8 +3,7 @@ FROM debian:stretch
 ENV LANG=C.UTF-8 \
     ODOO_VERSION=11.0 \
     ODOO_RELEASE=20181008 \
-    PG_VERSION=10 \
-    DEBIAN_FRONTEND=noninteractive
+    PG_VERSION=10
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
@@ -35,7 +34,7 @@ RUN cd /tmp && \
     apt-key add ACCC4CF8.asc && \
     echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list && \
     apt-get update && \
-    apt-get install -y --force-yes \
+    apt-get -y install -f --no-install-recommends \
     postgresql-client-${PG_VERSION} && \
 	apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
