@@ -27,6 +27,18 @@ RUN set -x; \
         && rm -rf wkhtmltox/ \
         && rm wkhtmltox.tar.xz
 
+# Install PG client
+ENV PG_VERSION 10
+RUN DEBIAN_FRONTEND=noninteractive \
+    cd /tmp && \
+    curl https://www.postgresql.org/media/keys/ACCC4CF8.asc -o ACCC4CF8.asc && \
+    apt-key add ACCC4CF8.asc && \
+    echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list && \
+    apt-get update && \
+    apt-get install -y --force-yes \
+    postgresql-client-${PG_VERSION} && \
+	apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 # Install Odoo
 RUN set -x; \
         curl -o odoo.deb -SL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb \
